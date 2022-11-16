@@ -1180,7 +1180,7 @@ public partial class WebForm1 : System.Web.UI.Page {
 
 
                                                                      ----------------------------------------
-                                                                     using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -1319,3 +1319,202 @@ public partial class WebForm1 : System.Web.UI.Page
                                                                   <city> Indore</city>
                                                                   </s>
                                                                   </student>
+//a) Create a web application to demonstrate Various uses and properties of SQL Data Source.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+public partial class LoginModule : System.Web.UI.Page
+{
+protected void Page_Load(object sender, EventArgs e)
+{
+}
+protected void btnSignUp_Click(object sender, EventArgs e)
+{
+SqlDataSource1.InsertParameters["Username"].DefaultValue = txtUserName.Text;
+SqlDataSource1.InsertParameters["Password"].DefaultValue = txtPassword.Text;
+SqlDataSource1.Insert();
+lblResult.Text = "User Added";
+}
+}
+//b) Create a web application To demonstrate data binding using DetailsView and FormView control.
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Collections.Generic;
+namespace WebApplication1
+{
+public partial class WebForm1 : System.Web.UI.Page
+{
+SqlDataAdapter da = new SqlDataAdapter();
+SqlConnection con = new SqlConnection();
+SqlCommand cmd = new SqlCommand();
+DataSet ds = new DataSet();
+string str;
+protected void Page_Load(object sender, EventArgs e)
+{
+con.ConnectionString = "Data
+Source=(LocalDB)\\v11.0;AttachDbFilename=C:\\Users\\SAHIL\\Documents\\Stud
+ents.mdf;Inte
+grated Security=True;Connect Timeout=30";
+con.Open();
+Label4.Text = "Connected To Server";
+con.Close();
+}
+protected void Button1_Click(object sender, EventArgs e)
+{
+str = "insert into stud_mast values(" + TextBox1.Text + " , ' " + TextBox2.Text + " ' ,
+"+
+TextBox3.Text + ")";
+con.Open();
+cmd = new SqlCommand(str,con);
+cmd.ExecuteNonQuery();
+con.Close();
+Label4.Text = " Save Successfull ";
+TextBox1.Text = " ";
+TextBox2.Text = " ";
+TextBox3.Text = " ";
+}
+protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs
+e)
+{
+}
+protected void Button4_Click(object sender, EventArgs e)
+{
+str = "select * from stud_mast where stud_id= " + DropDownList1.Text + " ";
+da = new SqlDataAdapter(str, con);
+ds = new DataSet();
+da.Fill(ds,"stud_mast");
+TextBox1.Text = ds.Tables["stud_mast"].Rows[0]["stud_id"].ToString();
+TextBox2.Text = ds.Tables["stud_mast"].Rows[0]["stud_name"].ToString();
+TextBox3.Text = ds.Tables["stud_mast"].Rows[0]["phn_no"].ToString();
+}
+protected void Button2_Click(object sender, EventArgs e)
+{
+str = "update stud_mast set stud_name= ' " + TextBox2.Text + " ', phn_no= "
++TextBox3.Text+" where stud_id= "+DropDownList1.Text+" ";
+con.Open();
+cmd = new SqlCommand(str, con);
+cmd.ExecuteNonQuery();
+con.Close();
+Label4.Text = " Update Successfull ";
+}
+protected void Button3_Click(object sender, EventArgs e)
+{
+str = "delete from stud_mast where stud_id=" + DropDownList1.Text + " ";
+con.Open();
+cmd = new SqlCommand(str, con);
+cmd.ExecuteNonQuery();
+con.Close();
+Label4.Text = " Update Successfull ";
+}}}
+
+//9 Create a web application to demonstrate use of GridView button column and GridView events.
+//Grid_view.aspx.cs:-
+using System;
+usingSystem.Collections.Generic;
+usingSystem.Linq;
+usingSystem.Web;
+usingSystem.Web.UI;
+usingSystem.Web.UI.WebControls;
+usingSystem.Drawing;
+public partial class grid_view : System.Web.UI.Page
+{
+protected void Page_Load(object sender, EventArgs e)
+{
+}
+protected void GridView1_RowCommand(object sender,
+GridViewCommandEventArgs e)
+{
+if (e.CommandName == "b1")
+{
+Response.Write(e.CommandName);
+GridView1.SelectedRowStyle.BackColor=System.Drawing.Color.Brown;
+GridView1.Rows[Convert.ToInt16(e.CommandArgument)].BackColor =
+System.Drawing.Color.Blue;
+}
+}
+}
+
+//10 a) Create a web application to demonstrate reading and writing operation with XML.
+//Default.aspx.cs:-
+using System;
+usingSystem.Collections.Generic;
+usingSystem.Linq;
+usingSystem.Web;
+usingSystem.Web.UI;
+usingSystem.Web.UI.WebControls;
+usingSystem.Xml;
+public partial class _Default : System.Web.UI.Page
+{
+protected void Button1_Click(object sender, EventArgs e)
+{
+XmlReader red = XmlReader.Create(@"C:\Users\Admin\Documents\Visual Studio
+2010\WebSites\WebSite24\XMLFile.xml");
+while (red.Read())
+{
+if (red.NodeType.Equals(XmlNodeType.Element))
+{
+string s = Label1.Text + "";
+Label1.Text = s + red.Name;
+}
+}
+red.Close();
+}
+protected void Button2_Click(object sender, EventArgs e)
+{
+XmlWriterSettings set = new XmlWriterSettings();
+set.Indent = true;
+XmlWriterwr = XmlWriter.Create(@"C:\Users\Admin\Documents\Visual Studio
+2010\WebSites\WebSite24\XMLFile3.xml",set);
+wr.WriteStartDocument();
+wr.WriteComment("EXAMPLE OF WRITE A XML DOCUMENT");
+wr.WriteStartElement("student");
+wr.WriteEndElement();
+}
+}
+
+//11) Programs to create and use DLL
+//Class1.cs:-
+using System;
+usingSystem.Collections.Generic;
+usingSystem.Linq;
+usingSystem.Text;
+namespace ClassLibrary5
+{
+publicclassClass1
+{
+publicint add(int a, int b)
+{
+int c = a + b;
+return c;
+}
+}
+}
+________________________
+//Consoleapplication5.cs:-
+using System;
+usingSystem.Collections.Generic;
+usingSystem.Linq;
+usingSystem.Text;
+namespace ConsoleApplication5
+{
+classProgram
+{
+staticvoid Main(string[] args)
+{
+ClassLibrary5.Class1 c = newClassLibrary5.Class1();
+int t = c.add(1, 2);
+Console.WriteLine("addition={0}", t);
+Console.ReadKey();
+Page 90 of 91TYIT ADVANCED WEB PROGRAMMING MANUAL
+K.M.AGRAWAL COLLEGE
+}
+}
+}
